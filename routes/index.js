@@ -45,7 +45,18 @@ router.get('/train', function(_req, res) {
 });
 
 router.get('/generate', function(_req, res) {
-  res.render('index');
+    var generatedJoke = [];
+    var currentWord = cache['START'][Math.floor(Math.random() * Math.floor(cache['START'].length))];
+    generatedJoke.push(currentWord);
+    while (true) {
+        currentWord = cache[currentWord][Math.floor(Math.random() * Math.floor(cache[currentWord].length))];
+        generatedJoke.push(currentWord);
+        if ( cache['END'].includes(currentWord) ) {
+          break;
+        }
+    }
+    var data = { joke: generatedJoke.join(' ') };
+    res.json(data);
 });
 
 module.exports = router;

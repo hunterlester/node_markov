@@ -1,6 +1,12 @@
 function generate() {
+    let button = document.getElementById('generate');
+    button.innerText = "Generating...";
+    button.setAttribute("disabled", "true");
     fetch("http://localhost:3000/generate")
+    .then(res => res.json())
     .then((res) => {
+        button.innerText = "Generate";
+        button.removeAttribute("disabled");
         let output = document.getElementById('output');
         output.innerText = res.joke;
     });
