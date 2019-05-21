@@ -12,5 +12,8 @@ function train() {
     .then((res) => {
         let output = document.getElementById('output');
         output.innerText = res.joke;
+        let originalJoke = document.createElement('div');
+        originalJoke.innerText = res.original;
+        output.appendChild(originalJoke);
     });
 }

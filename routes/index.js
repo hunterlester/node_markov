@@ -18,16 +18,19 @@ router.get('/train', function(_req, res) {
   })
   .then(response => response.json())
   .then((data) => {
+      let originalJoke = data.joke.slice(0);
       let wordArray = data.joke.split(" ");
       for ( var x = 0; x < wordArray.length; x++) {
           if ( x === 0 ) {
             cache['start'].push(wordArray[x]);
             generatedJoke.push(cache['start'][Math.floor(Math.random() * Math.floor(cache['start'].length))]);
-          } else if ( x === wordArray.length - 1) {
-            cache['end'].push(wordArray[x]);
-            generatedJoke.push(cache['end'][Math.floor(Math.random() * Math.floor(cache['end'].length))]);
-            break;
           }
+          // else 
+          // if ( x === wordArray.length - 1) {
+          //   cache['end'].push(wordArray[x]);
+          //   generatedJoke.push(cache['end'][Math.floor(Math.random() * Math.floor(cache['end'].length))]);
+          //   break;
+          // }
           var currentWordSet;
           if ( cache[wordArray[x]] ) {
               cache[wordArray[x]].push(wordArray[x + 1]);
@@ -40,6 +43,7 @@ router.get('/train', function(_req, res) {
       }
       console.log(generatedJoke);
       data.joke = generatedJoke.join(' ');
+      data.original = originalJoke;
       console.log(data);
       res.json(data);
   });
