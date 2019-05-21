@@ -8,6 +8,11 @@ router.get('/', function(_req, res) {
   res.render('index');
 });
 
+router.get('/clear', function( _req, res) {
+  cache = { START: [], END: [] };
+  res.sendStatus(200);
+});
+
 router.get('/train', function(_req, res) {
   var generatedJoke = []; 
   fetch("https://icanhazdadjoke.com", {
@@ -46,6 +51,9 @@ router.get('/train', function(_req, res) {
 
 router.get('/generate', function(_req, res) {
     var generatedJoke = [];
+    if ( !cache['START'].length ) {
+        return res.json({ joke: "You must train first." });
+    }
     var currentWord = cache['START'][Math.floor(Math.random() * Math.floor(cache['START'].length))];
     generatedJoke.push(currentWord);
     while (true) {

@@ -31,3 +31,16 @@ function train() {
         output.appendChild(originalJoke);
     });
 }
+
+function clear2() {
+    let button = document.getElementById('clear');
+    button.innerText = "Clearing...";
+    button.setAttribute("disabled", "true");
+    fetch("http://localhost:3000/clear")
+    .then(() => {
+        button.innerText = "Clear";
+        button.removeAttribute("disabled");
+        let output = document.getElementById('output');
+        output.innerText = '';
+    });
+}
