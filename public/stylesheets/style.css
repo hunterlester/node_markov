@@ -1,8 +1,25 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 20px;
 }
 
-a {
-  color: #00B7FF;
+button {
+ padding: 10px;
+ color: white;
+}
+
+#train {
+ background-color: #135200;
+}
+
+#generate {
+ background-color: #006d75;
+}
+
+#clear {
+ background-color: #003a8c;
+}
+
+.output {
+  background-color: #f0f5ff;
+  padding: 10px;
 }
