@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var fetch = require('node-fetch');
 
-var cache = { start: [], end: [] };
+var cache = { START: [], END: [] };
 
 router.get('/', function(_req, res) {
   res.render('index');
@@ -22,15 +22,12 @@ router.get('/train', function(_req, res) {
       let wordArray = data.joke.split(" ");
       for ( var x = 0; x < wordArray.length; x++) {
           if ( x === 0 ) {
-            cache['start'].push(wordArray[x]);
-            generatedJoke.push(cache['start'][Math.floor(Math.random() * Math.floor(cache['start'].length))]);
+            cache['START'].push(wordArray[x]);
+            generatedJoke.push(cache['START'][Math.floor(Math.random() * Math.floor(cache['START'].length))]);
           }
-          // else 
-          // if ( x === wordArray.length - 1) {
-          //   cache['end'].push(wordArray[x]);
-          //   generatedJoke.push(cache['end'][Math.floor(Math.random() * Math.floor(cache['end'].length))]);
-          //   break;
-          // }
+          if ( x === wordArray.length - 1 ) {
+            cache['END'].push(wordArray[x]);
+          }
           var currentWordSet;
           if ( cache[wordArray[x]] ) {
               cache[wordArray[x]].push(wordArray[x + 1]);
@@ -41,10 +38,8 @@ router.get('/train', function(_req, res) {
           }
           generatedJoke.push(currentWordSet[Math.floor(Math.random() * Math.floor(currentWordSet.length))])
       }
-      console.log(generatedJoke);
       data.joke = generatedJoke.join(' ');
       data.original = originalJoke;
-      console.log(data);
       res.json(data);
   });
 });
